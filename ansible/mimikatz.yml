@@ -2,7 +2,7 @@
   hosts: windows_targets
   gather_facts: no
   vars:
-    attacker_server: "http://192.168.10.50:8000"
+    attacker_server: "http://192.168.11.101:8000"
     target_domain: "red.local"
     target_user: "krbtgt"
 
