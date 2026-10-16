@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+
+import argparse
+import json
+from pathlib import Path
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Automate Golden Ticket Attack")
+    parser.add_argument("json_path", type=Path, help="Path to JSON file")
+    args = parser.parse_args()
+
+    if not args.json_path.is_file():
+        parser.error(f"File not found: {args.json_path}")
+
+    with args.json_path.open("r", encoding="utf-8") as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError as e:
+            parser.error(f"Invalid JSON in {args.json_path}: {e}")
+
+    print(data)  
+    for field in data:
+        print("Field name:", field)
+        print("Data: ",data[field],"\n")
+
+
+if __name__ == "__main__":
+    main()

