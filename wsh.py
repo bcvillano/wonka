@@ -4,7 +4,6 @@ import winrm
 
 # Wonka Shell - Use Golden Ticket for Command and Control
 
-# Set your ccache environment variable programmatically or rely on shell env
 os.environ['KRB5CCNAME'] = os.path.abspath('Administrator.ccache')
 
 def main():
