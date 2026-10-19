@@ -5,7 +5,7 @@ import shlex
 # wsh - Wonka Shell
 # Use WinRM and a previously created Golden Ticket to issue commands to remote system
 
-os.environ['KRB5CCNAME'] = '/path/to/Administrator.ccache'
+os.environ['KRB5CCNAME'] = '/home/kali/wonka/loot/Administrator.ccache'
 
 def format_cmd(command_str):
     parts = shlex.split(command_str)

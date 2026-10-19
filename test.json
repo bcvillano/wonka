@@ -1,6 +1,6 @@
 {
-  "domain": "blue-team-a.local",
+  "domain": "red.local",
   "sid": "S-1-5-21-123456789-987654321-111111111",
-  "krbtgt_hash": "aad3b435b51404eeaad3b435b51404ee...",
-  "target_dc": "dc1.blue-team-a.local"
+  "aesKey": "aad3b435b51404eeaad3b435b51404ee...",
+  "target_dc": "dc.red.local"
 }
