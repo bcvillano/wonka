@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 
 def test(test_json):
-    subprocess.run(f"impacket-ticketer -aesKey {test_json['aesKey']} -domain-sid {test_json['sid']} -domain {test_json['domain']} -user-id 500 Administrator")
+    subprocess.run(f"impacket-ticketer -aesKey {test_json['aesKey']} -domain-sid {test_json['sid']} -domain {test_json['domain']} -user-id 500 Administrator",shell=True)
     print("[+] TEST DONE")
 
 
