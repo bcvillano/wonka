@@ -9,8 +9,6 @@ import winrm
 RED = '\033[91m'
 RESET = '\033[0m'
 
-os.environ['KRB5CCNAME'] = os.path.abspath('Administrator.ccache')
-
 def parse_args():
     parser = argparse.ArgumentParser(description="Wonka Shell - WinRM Kerberos Shell")
     parser.add_argument(
@@ -18,11 +16,17 @@ def parse_args():
         nargs='?',
         help='Target IP address or hostname'
     )
+    parser.add_argument(
+        '-k', '--ccache',
+        default='Administrator.ccache',
+        help='Path to the Kerberos ccache file (default: ./Administrator.ccache)'
+    )
     return parser.parse_args()
 
 def main():
     args = parse_args()
     target = args.target
+    os.environ['KRB5CCNAME'] = os.path.abspath(args.ccache)
 
     print(f"[*] Connecting to {target} via WinRM using Kerberos Golden Ticket...")
     try:
