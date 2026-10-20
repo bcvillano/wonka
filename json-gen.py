@@ -37,11 +37,15 @@ def main():
     parser = argparse.ArgumentParser(description="Parse Mimikatz output and generate a JSON representation of credentials.")
     parser.add_argument("file", help="Path to the Mimikatz text output file")
     parser.add_argument("-o", "--output", help="Optional path to save the output JSON file", default=None)
+    parser.add_argument("-t","--team",help="", default=None)
+    parser.add_argument("-d","--domain",help="",required=True, default=None)
     
     args = parser.parse_args()
 
     result = parse_mimikatz(args.file)
-
+    result["domain"] = args.domain
+    if args.team is not None:
+        result["team"] = args.team
     json_output = json.dumps(result, indent=4)
 
     if args.output:
