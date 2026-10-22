@@ -1,5 +1,6 @@
 # wonka
 Golden Ticket attack automation for red vs blue competitions
+#### Created by Braeden Villano for CSEC-473 Cyber Defense Techniques
 ## Prerequisites
 ### DNS
 For the attack to work Kerberos needs to be able to resolve the FQDN (can add to /etc/hosts if you need to).  
